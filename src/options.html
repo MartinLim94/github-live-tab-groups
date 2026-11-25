@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>GitHub Live Tab Groups</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font:
+          15px/1.5 -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        max-width: 560px;
+        margin: 40px auto;
+        padding: 0 16px;
+      }
+      #token {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+        font: inherit;
+      }
+      select {
+        margin-left: 8px;
+        padding: 4px;
+        font: inherit;
+      }
+      button {
+        margin: 12px 8px 0 0;
+        padding: 6px 14px;
+        font: inherit;
+      }
+      dt {
+        font-weight: 600;
+      }
+      dd {
+        margin: 0 0 8px;
+      }
+      .error {
+        color: #d1242f;
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0 0 8px;
+      }
+      fieldset label {
+        margin-right: 16px;
+      }
+      .note {
+        opacity: 0.75;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GitHub Live Tab Groups</h1>
+
+    <fieldset id="token-type">
+      <legend>Token type</legend>
+      <label>
+        <input
+          id="token-type-classic"
+          type="radio"
+          name="token-type"
+          value="classic"
+        />
+        Classic token
+      </label>
+      <label>
+        <input
+          id="token-type-fine-grained"
+          type="radio"
+          name="token-type"
+          value="fine-grained"
+        />
+        Fine-grained token
+      </label>
+    </fieldset>
+
+    <section data-token-type="classic">
+      <ol>
+        <li>
+          Open
+          <a
+            href="https://github.com/settings/tokens/new?scopes=repo&description=Dia%20PR%20tabs"
+            target="_blank"
+            rel="noreferrer"
+            >New classic token</a
+          >.
+        </li>
+        <li>Scope: tick <code>repo</code>. Nothing else is needed.</li>
+        <li>
+          If your organisation uses SSO: on the token list, click
+          <b>Configure SSO</b> next to the token and <b>Authorize</b> the
+          organisation.
+        </li>
+      </ol>
+      <p class="note">
+        No admin approval needed, and it covers every organisation you belong
+        to. Note: <code>repo</code> also allows writing. This extension only
+        reads.
+      </p>
+    </section>
+
+    <section data-token-type="fine-grained">
+      <ol>
+        <li>
+          Open
+          <a
+            href="https://github.com/settings/personal-access-tokens/new"
+            target="_blank"
+            rel="noreferrer"
+            >New fine-grained token</a
+          >.
+        </li>
+        <li>Resource owner: the organisation that owns your repositories.</li>
+        <li>Repository access: <b>All repositories</b>.</li>
+        <li>
+          Permissions → Repository permissions →
+          <b>Pull requests: Read-only</b>. Metadata: Read-only is added
+          automatically.
+        </li>
+      </ol>
+      <p class="note">
+        Read-only, but covers one organisation only. The organisation may need
+        an admin to approve the token. Until then its PRs don't appear: the
+        status shows 0 PRs and no error.
+      </p>
+    </section>
+
+    <label for="token">GitHub token</label>
+    <input id="token" type="password" autocomplete="off" />
+    <button id="save">Save and sync</button>
+    <button id="remove">Remove token</button>
+    <button id="reopen">Reopen PR tabs I closed</button>
+
+    <p>
+      <label for="sync-minutes">Auto sync every</label>
+      <select id="sync-minutes"></select>
+    </p>
+    <p>
+      <label>
+        <input id="include-reviews" type="checkbox" />
+        Also open PRs that request my review
+      </label>
+    </p>
+
+    <h2>Status</h2>
+    <button id="sync-now">Sync now</button>
+    <dl id="status"></dl>
+
+    <script src="options.js"></script>
+  </body>
+</html>

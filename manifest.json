@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Live Tab Groups",
+  "version": "0.2.0",
+  "description": "Keeps a GitHub tab group in sync with your open pull requests.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["tabGroups", "alarms", "storage", "notifications"],
+  "host_permissions": ["https://api.github.com/*", "https://github.com/*"],
+  "background": { "service_worker": "service-worker.js" },
+  "action": {
+    "default_title": "Sync PR tabs now",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "commands": {
+    "sync-now": {
+      "suggested_key": { "default": "Alt+Shift+R" },
+      "description": "Sync PR tabs now"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*/pull/*"],
+      "js": ["pr-page.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
