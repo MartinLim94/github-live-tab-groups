@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GitHub Live Tab Groups",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Keeps a GitHub tab group in sync with your open pull requests.",
   "icons": {
     "16": "icons/icon-16.png",
